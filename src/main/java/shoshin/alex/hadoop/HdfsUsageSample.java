@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package shoshin.alex.hadoop;
 
 import shoshin.alex.utils.RecordsCounter;
@@ -20,15 +15,16 @@ import shoshin.alex.utils.Printer;
  *
  * @author Alexander_Shoshin
  */
-public class HdfsUsage {
+public class HdfsUsageSample {
     private static final String fsDefaultFs = "fs.defaultFS";
     private static final int logIdPlace = 2;
     private static final int topCount = 100;
     
     public static void main(String[] args) throws IOException {
+        // !!!! to property file
         String host = "10.20.9.37";
         String port = "8020";
-        String inputFilesPath = "/training/dataset/ipinyou";
+        String inputFilesPath = "/training/dataset/ipinyou_1";
         String outputFilePath = "/training/hadoop/task2/result.txt";
         
         FileSystem fs = getHDFSConnection(host, port);
