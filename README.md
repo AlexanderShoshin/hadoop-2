@@ -13,3 +13,7 @@ dataset.folder.path=<hdfs_path_to_dataset_directory>
 output.folder.path=<hdfs_path_to_output_directory>
 ```
 3. Run project. Be ready application will process dataset for a long time (more than 20 minutes)
+
+## Task result
+
+As a result you should resieve data same as in bid_result.txt
