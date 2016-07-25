@@ -16,16 +16,16 @@ import shoshin.alex.utils.Printer;
  * @author Alexander_Shoshin
  */
 public class HdfsUsageSample {
-    private static final String fsDefaultFs = "fs.defaultFS";
-    private static final int logIdPlace = 2;
-    private static final int topCount = 100;
+    private static final int LOG_ID_PLACE = 2;
+    private static final int TOP_COUNT = 100;
     
     public static void main(String[] args) throws IOException {
-        // !!!! to property file
-        String host = "10.20.9.37";
-        String port = "8020";
-        String inputFilesPath = "/training/dataset/ipinyou_1";
-        String outputFilePath = "/training/hadoop/task2/result.txt";
+        Properties props = new Properties();
+        props.load(HdfsUsageSample.class.getClassLoader().getResourceAsStream("hadoop.properties"));
+        String host = props.getProperty("host");
+        String port = props.getProperty("port");
+        String inputFilesPath = props.getProperty("dataset.folder.path");
+        String outputFilePath = props.getProperty("output.folder.path");
         
         FileSystem fs = getHDFSConnection(host, port);
         Map<String, Integer> mostFrequentRecords = getTopRecordsCount(fs, inputFilesPath);
@@ -35,7 +35,7 @@ public class HdfsUsageSample {
     
     private static FileSystem getHDFSConnection(String host, String port) throws IOException {
         Configuration conf = new Configuration();
-        conf.set(fsDefaultFs, "hdfs://" + host + ":" + port);
+        conf.set("fs.defaultFS", "hdfs://" + host + ":" + port);
         return FileSystem.get(conf);
     }
     
@@ -44,19 +44,19 @@ public class HdfsUsageSample {
         Path path = new Path(inputFilesPath);
         for (FileStatus fileStatus: fs.listStatus(path)) {
             if (fs.exists(fileStatus.getPath())) {
-                RecordsCounter.countRecordsFromBZip2Stream(fs.open(fileStatus.getPath()), recordsCountById, logIdPlace);
+                RecordsCounter.countRecordsFromBZip2Stream(fs.open(fileStatus.getPath()), recordsCountById, LOG_ID_PLACE);
             }
         }
-        return getMaxValueRecords(recordsCountById, topCount);
+        return getMaxValueRecords(recordsCountById, TOP_COUNT);
     }
     
     private static Map<String, Integer> getMaxValueRecords(Map<String, Integer> records, int count) {
-        List<String> maxValueRecords = MapSupply.getMaxValueKeys(records, count);
-        Collections.reverse(maxValueRecords);
-        return MapSupply.substring(records, maxValueRecords);
+        List<String> maxValueKeys = MapSupply.getMaxValueKeys(records, count);
+        Collections.reverse(maxValueKeys);
+        return MapSupply.substring(records, maxValueKeys);
     }
     
     private static void saveToHDFS(FileSystem fs, String outputFilePath, Map<String, Integer> mostFrequentRecords) throws IOException {
-        Printer.print(mostFrequentRecords, fs.create(new Path(outputFilePath)));
+        Printer.printToStream(mostFrequentRecords, fs.create(new Path(outputFilePath)));
     }
 }
