@@ -9,10 +9,6 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-/**
- *
- * @author Alexander_Shoshin
- */
 public class MapSupplyTest {
     private Map<String, Integer> targetMap;
     

@@ -10,11 +10,6 @@ import org.apache.hadoop.fs.Path;
 import shoshin.alex.utils.MapSupply;
 import shoshin.alex.utils.Printer;
 
-
-/**
- *
- * @author Alexander_Shoshin
- */
 public class HdfsUsageSample {
     private static final int LOG_ID_PLACE = 2;
     private static final int TOP_COUNT = 100;

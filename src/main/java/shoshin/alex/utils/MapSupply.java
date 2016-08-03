@@ -2,10 +2,6 @@ package shoshin.alex.utils;
 
 import java.util.*;
 
-/**
- *
- * @author Alexander_Shoshin
- */
 public class MapSupply {
     public static <K> List<K> getMaxValueKeys(Map<K, Integer> data, int maxValuesCount) {
         List<K> maxValueKeys = new LinkedList<>();

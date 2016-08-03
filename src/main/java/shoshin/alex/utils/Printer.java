@@ -6,10 +6,6 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.util.Map;
 
-/**
- *
- * @author Alexander_Shoshin
- */
 public class Printer {
     public static <K, V> void printToStream(Map<K, V> map, OutputStream output) throws IOException {
         try (BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(output))) {
