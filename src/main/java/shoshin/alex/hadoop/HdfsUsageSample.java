@@ -16,17 +16,24 @@ public class HdfsUsageSample {
     private static final String DEFAULT_FS_PROP = "fs.defaultFS";
     
     public static void main(String[] args) throws IOException {
-        Properties props = new Properties();
-        props.load(HdfsUsageSample.class.getClassLoader().getResourceAsStream("hadoop.properties"));
+        Properties props = getProperties("hadoop.properties");
         final String host = props.getProperty("host");
         final String port = props.getProperty("port");
         final String inputFilesPath = props.getProperty("dataset.folder.path");
         final String outputFilePath = props.getProperty("output.folder.path");
         
-        FileSystem fs = getHDFSConnection(host, port);
-        Map<String, Integer> mostFrequentRecords = getTopRecordsCount(fs, inputFilesPath);
-        saveToHDFS(fs, outputFilePath, mostFrequentRecords);
-        fs.close();
+        try (FileSystem fs = getHDFSConnection(host, port)) {
+            Map<String, Integer> mostFrequentRecords = getTopRecordsCount(fs, inputFilesPath);
+            saveToHDFS(fs, outputFilePath, mostFrequentRecords);
+        }
+    }
+    
+    private static Properties getProperties(String fileName) throws IOException {
+        Properties props = new Properties();
+        try (InputStream propertyStream = HdfsUsageSample.class.getClassLoader().getResourceAsStream(fileName)) {
+            props.load(propertyStream);
+        }
+        return props;
     }
     
     private static FileSystem getHDFSConnection(String host, String port) throws IOException {
