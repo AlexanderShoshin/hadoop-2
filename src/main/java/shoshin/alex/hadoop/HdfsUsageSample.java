@@ -22,10 +22,10 @@ public class HdfsUsageSample {
     public static void main(String[] args) throws IOException {
         Properties props = new Properties();
         props.load(HdfsUsageSample.class.getClassLoader().getResourceAsStream("hadoop.properties"));
-        String host = props.getProperty("host");
-        String port = props.getProperty("port");
-        String inputFilesPath = props.getProperty("dataset.folder.path");
-        String outputFilePath = props.getProperty("output.folder.path");
+        final String host = props.getProperty("host");
+        final String port = props.getProperty("port");
+        final String inputFilesPath = props.getProperty("dataset.folder.path");
+        final String outputFilePath = props.getProperty("output.folder.path");
         
         FileSystem fs = getHDFSConnection(host, port);
         Map<String, Integer> mostFrequentRecords = getTopRecordsCount(fs, inputFilesPath);
