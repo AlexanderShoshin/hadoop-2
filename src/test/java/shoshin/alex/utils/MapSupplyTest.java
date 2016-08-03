@@ -14,7 +14,7 @@ import org.junit.Test;
  * @author Alexander_Shoshin
  */
 public class MapSupplyTest {
-    Map<String, Integer> targetMap;
+    private Map<String, Integer> targetMap;
     
     @Before
     public void initTargetMap() {
