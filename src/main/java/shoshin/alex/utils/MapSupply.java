@@ -12,9 +12,7 @@ public class MapSupply {
         data.forEach((id, count) -> {
             int pos;
             for (pos = 0; pos < maxValueKeys.size(); pos++) {
-                if (count > data.get(maxValueKeys.get(pos))) {
-                    continue;
-                } else {
+                if (count <= data.get(maxValueKeys.get(pos))) {
                     break;
                 }
             }
