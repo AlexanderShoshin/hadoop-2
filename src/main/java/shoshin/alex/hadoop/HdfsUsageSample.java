@@ -18,6 +18,7 @@ import shoshin.alex.utils.Printer;
 public class HdfsUsageSample {
     private static final int LOG_ID_PLACE = 2;
     private static final int TOP_COUNT = 100;
+    private static final String DEFAULT_FS_PROP = "fs.defaultFS";
     
     public static void main(String[] args) throws IOException {
         Properties props = new Properties();
@@ -35,7 +36,7 @@ public class HdfsUsageSample {
     
     private static FileSystem getHDFSConnection(String host, String port) throws IOException {
         Configuration conf = new Configuration();
-        conf.set("fs.defaultFS", "hdfs://" + host + ":" + port);
+        conf.set(DEFAULT_FS_PROP, "hdfs://" + host + ":" + port);
         return FileSystem.get(conf);
     }
     
